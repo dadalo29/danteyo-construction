@@ -71,8 +71,12 @@
         };
       });
     };
-    pills('lv', lvls, 'R+1', function (a, k) { lv = k; });
-    pills('st', Object.keys(rates), 'Moyen', function (a) { st = a; });
+    var q = new URLSearchParams(location.search);
+    if (q.get('s')) surf.value = q.get('s');
+    if (q.get('lv')) lv = Math.max(0, Math.min(3, +q.get('lv')));
+    if (q.get('st') && rates[q.get('st')]) st = q.get('st');
+    pills('lv', lvls, lvls[lv], function (a, k) { lv = k; });
+    pills('st', Object.keys(rates), st, function (a) { st = a; });
     var fmt = function (v) { return v.toLocaleString('fr-FR').replace(/ | /g, ' '); };
     var money = function (v) { return fmt(Math.round(v / 100000) * 100000) + ' FCFA'; };
     var line = function (p, t) { return '<div><span>' + p[0] + '</span><b>' + money(t * p[1]) + '</b></div>'; };
@@ -92,4 +96,41 @@
   // Formulaire de contact (maquette)
   var cf = document.getElementById('cform');
   if (cf) cf.addEventListener('submit', function (e) { e.preventDefault(); document.getElementById('sent').style.display = 'block'; });
+})();
+
+(function () {
+  // Héro en diaporama
+  var hs = document.querySelectorAll('.hs'), hi = document.querySelectorAll('.hframe img'), hl = document.querySelectorAll('.hframe .lab'), hd = document.querySelectorAll('.hdots button');
+  if (hs.length) {
+    var cur = 0, timer;
+    var go = function (k) {
+      cur = (k + hs.length) % hs.length;
+      hs.forEach(function (s, j) { s.classList.toggle('on', j === cur); });
+      hi.forEach(function (s, j) { s.classList.toggle('on', j === cur); });
+      hl.forEach(function (s, j) { s.style.display = j === cur ? '' : 'none'; });
+      hd.forEach(function (s, j) { s.setAttribute('aria-current', j === cur ? 'true' : 'false'); });
+    };
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var start = function () { if (!reduce) timer = setInterval(function () { go(cur + 1); }, 6500); };
+    hd.forEach(function (b, k) { b.addEventListener('click', function () { clearInterval(timer); go(k); start(); }); });
+    go(0); start();
+  }
+
+  // Compteurs animés
+  var cs = document.querySelectorAll('[data-count]');
+  if (cs.length && 'IntersectionObserver' in window) {
+    var ob = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; ob.unobserve(e.target);
+        var el = e.target, end = +el.getAttribute('data-count'), pre = el.getAttribute('data-pre') || '', suf = el.getAttribute('data-suf') || '', dec = +(el.getAttribute('data-dec') || 0), t0 = null;
+        var f = function (t) {
+          if (!t0) t0 = t; var p = Math.min(1, (t - t0) / 1400), v = end * (1 - Math.pow(1 - p, 3));
+          el.textContent = pre + v.toLocaleString('fr-FR', { minimumFractionDigits: dec, maximumFractionDigits: dec }).replace(/ | /g, ' ') + suf;
+          if (p < 1) requestAnimationFrame(f);
+        };
+        requestAnimationFrame(f);
+      });
+    }, { threshold: .4 });
+    cs.forEach(function (c) { ob.observe(c); });
+  }
 })();
