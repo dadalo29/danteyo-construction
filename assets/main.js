@@ -89,13 +89,41 @@
       document.getElementById('lines').innerHTML =
         '<div class="t"><span>Gros œuvre</span><b>' + money(t * .55) + '</b></div>' + go.map(function (p) { return line(p, t); }).join('') +
         '<div class="t" style="margin-top:8px"><span>Second œuvre</span><b>' + money(t * .45) + '</b></div>' + so.map(function (p) { return line(p, t); }).join('');
+      var cta = document.getElementById('est-cta');
+      if (cta) cta.href = 'contact.html?type=' + encodeURIComponent('Construction d’une villa') + '&msg=' + encodeURIComponent('Estimation en ligne : ' + s + ' m² au sol, ' + lvls[lv] + ', standing ' + st.toLowerCase() + ', région ' + r + ' — ' + ts + ' m² habitables, environ ' + money(t) + '. Je souhaite un devis détaillé.');
     };
     surf.addEventListener('input', calc); sel.addEventListener('change', calc); calc();
   }
 
   // Formulaire de contact (maquette)
   var cf = document.getElementById('cform');
-  if (cf) cf.addEventListener('submit', function (e) { e.preventDefault(); document.getElementById('sent').style.display = 'block'; });
+  if (cf) {
+    var q2 = new URLSearchParams(location.search), msg = document.getElementById('f-msg');
+    if (q2.get('msg') && msg) msg.value = q2.get('msg');
+    if (q2.get('type')) { var ft = document.getElementById('f-type'); if (ft) ft.value = q2.get('type'); }
+    var field = function (id) { return document.getElementById(id); };
+    var check = function (id, ok) { var f = field(id).closest('.f'); f.classList.toggle('invalid', !ok); field(id).setAttribute('aria-invalid', !ok); return ok; };
+    var compose = function () {
+      return 'Bonjour DANTEYO CONSTRUCTION,\n\nNom : ' + field('f-nom').value + '\nTéléphone : ' + field('f-tel').value + '\nEmail : ' + field('f-mail').value +
+        '\nProjet : ' + field('f-type').value + '\n\n' + field('f-msg').value;
+    };
+    var valid = function () {
+      var a = check('f-nom', field('f-nom').value.trim().length > 1);
+      var b = check('f-mail', /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(field('f-mail').value.trim()));
+      if (!a) field('f-nom').focus(); else if (!b) field('f-mail').focus();
+      return a && b;
+    };
+    cf.addEventListener('submit', function (e) {
+      e.preventDefault(); if (!valid()) return;
+      window.open('https://wa.me/221784737690?text=' + encodeURIComponent(compose()), '_blank', 'noopener');
+      document.getElementById('sent').style.display = 'block';
+    });
+    var mb = document.getElementById('f-mailbtn');
+    if (mb) mb.addEventListener('click', function () {
+      if (!valid()) return;
+      location.href = 'mailto:contact@danteyoconstruction.com?subject=' + encodeURIComponent('Demande de devis — ' + field('f-type').value) + '&body=' + encodeURIComponent(compose());
+    });
+  }
 })();
 
 (function () {
@@ -111,9 +139,22 @@
       hd.forEach(function (s, j) { s.setAttribute('aria-current', j === cur ? 'true' : 'false'); });
     };
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var start = function () { if (!reduce) timer = setInterval(function () { go(cur + 1); }, 6500); };
-    hd.forEach(function (b, k) { b.addEventListener('click', function () { clearInterval(timer); go(k); start(); }); });
-    go(0); start();
+    var paused = reduce, pb = document.querySelector('.hpause'), hero = document.querySelector('.hero2');
+    var stop = function () { clearInterval(timer); timer = null; };
+    var start = function () { stop(); if (!paused) timer = setInterval(function () { go(cur + 1); }, 6500); };
+    var setPaused = function (p) {
+      paused = p; if (pb) { pb.setAttribute('aria-label', p ? 'Lancer le défilement' : 'Mettre en pause le défilement'); pb.innerHTML = p
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M7 5l12 7-12 7z"/></svg>'
+        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>'; }
+      start();
+    };
+    if (pb) pb.addEventListener('click', function () { setPaused(!paused); });
+    if (hero) {
+      hero.addEventListener('mouseenter', stop); hero.addEventListener('mouseleave', start);
+      hero.addEventListener('focusin', stop); hero.addEventListener('focusout', start);
+    }
+    hd.forEach(function (b, k) { b.addEventListener('click', function () { go(k); start(); }); });
+    go(0); setPaused(paused);
   }
 
   // Compteurs animés

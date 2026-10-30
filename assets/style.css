@@ -353,3 +353,25 @@ footer .b{border-top:1px solid #1C2C45;padding-top:20px;display:flex;flex-wrap:w
 .dia h2{font-size:30px}
 .article h2{font-size:23px}
 }
+
+/* ===== V3 : finitions UX / accessibilité ===== */
+.hpause{width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-left:8px}
+.hdots{align-items:center}
+.wa-float{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:60;width:58px;height:58px;border-radius:999px;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(0,0,0,.28);transition:transform .2s ease}
+.wa-float:hover{transform:scale(1.06)}
+.wa-float span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.cform .hint{font-size:13px;color:var(--muted)}
+.err{display:none;color:#B42318;font-size:13px}
+.f.invalid input{border-color:#B42318}
+.f.invalid .err{display:block}
+@media (max-width:640px){
+.hero2 .in{padding:40px 24px 40px;gap:0}
+.hframe{display:none}
+.hs h1,.hs .t1{font-size:34px}
+.hs .sub{font-size:16px}
+.stats .wrap{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 16px;padding-top:24px;padding-bottom:28px}
+.stat b{font-size:24px}
+.stat span{font-size:12.5px}
+.ctas .btn{flex:1 1 100%}
+.wa-float{width:54px;height:54px;right:14px}
+}
