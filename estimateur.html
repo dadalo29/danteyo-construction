@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estimateur de coût de construction — Danteyo Construction</title>
+<meta name="description" content="Estimez le coût de construction de votre maison au Sénégal : surface, niveaux, standing et région.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+<header class="top">
+<div class="wrap">
+<a class="logo" href="index.html" aria-label="Danteyo Construction — accueil"><img src="img/logo.png" alt="Danteyo Construction — Bâtiment &amp; Infrastructures"></a>
+<nav class="nav" aria-label="Navigation principale"><a href="a-propos.html">À propos</a><a href="metiers.html">Métiers</a><a href="references.html">Références</a><a href="realisations.html">Réalisations</a><a href="estimateur.html" aria-current="page">Estimateur</a></nav>
+<a class="btn btn-o desk" href="contact.html">Nous contacter</a>
+<button class="burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mnav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+</div>
+<nav class="mnav" id="mnav" aria-label="Menu mobile"><a href="a-propos.html">À propos</a><a href="metiers.html">Métiers</a><a href="references.html">Références</a><a href="realisations.html">Réalisations</a><a href="estimateur.html" aria-current="page">Estimateur</a><a class="btn btn-o" href="contact.html">Nous contacter</a></nav>
+</header>
+<main id="contenu">
+<section class="phead">
+<img src="img/programme-villas.jpg" alt="" aria-hidden="true">
+<div class="veil grid-bg"></div>
+<div class="wrap in">
+<nav class="crumbs a1" aria-label="Fil d’Ariane"><a href="index.html">Accueil</a> <span aria-hidden="true">/</span> <span>Estimateur</span></nav>
+<p class="kick a1">Estimateur</p>
+<h1 class="a2">Estimez le coût de votre maison.</h1>
+<p class="sub a3">Une première idée de budget en quatre réglages, puis votre devis détaillé sur demande.</p>
+</div>
+</section>
+<section class="sec sand"><div class="wrap">
+<div class="erow reveal">
+<form class="eform" onsubmit="return false">
+<div><div class="srow"><label for="surf">1. Surface au sol</label><output id="surfOut" for="surf">150 m²</output></div><input id="surf" type="range" min="50" max="500" step="10" value="150"></div>
+<fieldset><legend>2. Nombre de niveaux</legend><div class="pills c4" id="lv"></div></fieldset>
+<fieldset><legend>3. Standing</legend><div class="pills c3" id="st"></div></fieldset>
+<div style="display:flex;flex-direction:column;gap:10px"><label for="reg">4. Région</label><select id="reg"></select></div>
+</form>
+<div class="eres" aria-live="polite">
+<span style="font-size:14px;color:#B9C6D8">Estimation pour <span id="tsurf">300</span> m² habitables</span>
+<span class="tot" id="tot">—</span>
+<span class="pm">soit environ <span id="pm">—</span> / m²</span>
+<div class="lines" id="lines"></div>
+<small>Estimation indicative et non contractuelle, hors terrain, plans et autorisations.</small>
+<a class="btn btn-o" href="contact.html">Recevoir mon devis détaillé</a>
+</div>
+</div></div></section>
+</main>
+<footer>
+<div class="wrap">
+<div class="t">
+<div><span class="logo" style="display:inline-flex"><img src="img/logo.png" alt="Danteyo Construction"></span><p style="margin-top:14px;font-size:14px;line-height:1.6">Ingénierie conseil, immobilier et construction — bâtiment &amp; infrastructures.</p></div>
+<div><h2>Le site</h2><ul><li><a href="a-propos.html">À propos</a></li><li><a href="metiers.html">Nos métiers</a></li><li><a href="references.html">Références</a></li><li><a href="realisations.html">Réalisations</a></li><li><a href="estimateur.html">Estimateur</a></li></ul></div>
+<div><h2>Contact</h2><ul><li>Dieupeul 2, Immeuble AF – 6e étage, Dakar</li><li><a href="tel:+221784737690">(+221) 78 473 76 90</a></li><li><a href="tel:+33684453885">(+33) 6 84 45 38 85</a></li><li><a href="mailto:contact@danteyoconstruction.com">contact@danteyoconstruction.com</a></li></ul></div>
+</div>
+<div class="b"><span>© 2026 DANTEYO CONSTRUCTION · Dakar, Sénégal</span><span>Mentions légales</span></div>
+</div>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>
